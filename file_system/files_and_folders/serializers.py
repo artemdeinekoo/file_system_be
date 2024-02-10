@@ -14,12 +14,10 @@ class FolderSerializer(serializers.ModelSerializer):
         fields = ['id', 'name', 'parentFolderId', 'childFolders', 'childFiles', 'createdAt', 'updatedAt']
 
     def getChildFolders(self, obj):
-        childFolders = Folder.objects.filter(parentFolderId=obj.id)
-        return [folder.id for folder in childFolders]
+        return [folder.id for folder in obj.childFolders.all()]
 
     def getChildFiles(self, obj):
-        child_files = File.objects.filter(parentFolderId=obj.id)
-        return [file.id for file in child_files]
+        return [file.id for file in obj.childFiles.all()]
 
     def validate(self, data):
         
