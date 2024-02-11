@@ -9,5 +9,5 @@ urlpatterns = [
     path('folders/<int:pk>', views.folder_actions),
     path('files/', views.create_file),
     path('files/<int:pk>', views.file_actions),
-    path('files/get_all', views.getAllFiles),
+    path('folders/<int:pk>/objects', views.getFolderObjects),
 ]

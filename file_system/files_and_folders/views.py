@@ -2,7 +2,7 @@ from django.shortcuts import render
 from rest_framework import status
 from rest_framework.decorators import api_view
 from files_and_folders.models import Folder, File
-from files_and_folders.serializers import FolderSerializer, FileSerializer, FileSystemSerializer
+from files_and_folders.serializers import FolderSerializer, FileSerializer
 from rest_framework.response import Response
 
 
@@ -74,14 +74,27 @@ def file_actions(request, pk):
 def getFileSystemStructure(request):
     if request.method == 'GET':
         folders = Folder.objects.filter(parentFolderId=None)
-        serializer = FileSystemSerializer(folders, many=True)
+        serializer = FolderSerializer(folders, many=True)
         return Response(serializer.data)
 
 @api_view(['GET'])
-def getAllFiles(request):
+def getFolderObjects(request, pk):
+    try:
+        folder = Folder.objects.get(pk=pk)
+    except File.DoesNotExist:
+        return Response(status=status.HTTP_404_NOT_FOUND)
+
     if request.method == 'GET':
-        files = File.objects.all()
-        serializer = FileSerializer(files, many=True)
-        return Response(serializer.data)
+        child_files = FileSerializer(folder.childFiles.all(), many=True)
+        child_folders = FolderSerializer(folder.childFolders.all(), many=True)
+
+
+        return Response(child_folders.data + child_files.data)
+
+        
+
+        
+
+        
         
     
