@@ -56,21 +56,6 @@ class FileSerializer(serializers.ModelSerializer):
 
     def validate(self, data):
 
-        print()
-        print()
-        print()
-        print()
-        print()
-        print()
-        print(bool("parentFolderId" in data))
-        print(data["parentFolderId"])
-        print()
-        print()
-        print()
-        print()
-        print()
-        print()
-
         if File.objects.filter(parentFolderId=None, name=data["name"]):
             raise ValueError("File with this name already exists in the directory")
 

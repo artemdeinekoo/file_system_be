@@ -5,6 +5,7 @@ from files_and_folders.models import Folder, File
 from files_and_folders.serializers import FolderSerializer, FileSerializer
 from rest_framework.response import Response
 from django.utils import timezone
+from django.db.models import Q
 
 
 @api_view(["POST"])
@@ -29,6 +30,7 @@ def folder_actions(request, pk):
         return Response(serializer.data)
 
     elif request.method == "PUT":
+        request.data["updatedAt"] = timezone.now()
         serializer = FolderSerializer(folder, data=request.data)
         if serializer.is_valid():
             serializer.save()
@@ -53,6 +55,7 @@ def create_file(request):
 
 @api_view(["GET", "PUT", "DELETE"])
 def file_actions(request, pk):
+
     try:
         file = File.objects.get(pk=pk)
     except File.DoesNotExist:
@@ -63,6 +66,7 @@ def file_actions(request, pk):
         return Response(serializer.data)
 
     elif request.method == "PUT":
+        request.data["updatedAt"] = timezone.now()
         serializer = FileSerializer(file, data=request.data)
         if serializer.is_valid():
             serializer.save()
@@ -113,3 +117,24 @@ def getFolderObjects(request, pk):
         }
 
         return Response(response_data)
+
+
+@api_view(["GET"])
+def searchForObjects(request, query=""):
+    if request.method == "GET":
+        files = File.objects.all()
+        folders = Folder.objects.all()
+
+        if query:
+            files = FileSerializer(
+                files.filter(Q(name__icontains=query) | Q(content__icontains=query))[
+                    :5
+                ],
+                many=True,
+            ).data
+            folders = FolderSerializer(
+                folders.filter(name__icontains=query)[:5], many=True
+            ).data
+
+            return Response([files + folders])
+        return Response([])

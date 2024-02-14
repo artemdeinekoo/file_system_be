@@ -10,4 +10,6 @@ urlpatterns = [
     path("files/", views.create_file),
     path("files/<int:pk>", views.file_actions),
     path("folders/<int:pk>/objects", views.getFolderObjects),
+    path("search/", views.searchForObjects),
+    path("search/<str:query>", views.searchForObjects),
 ]
