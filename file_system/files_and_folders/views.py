@@ -4,7 +4,6 @@ from rest_framework.decorators import api_view
 from files_and_folders.models import Folder, File
 from files_and_folders.serializers import FolderSerializer, FileSerializer
 from rest_framework.response import Response
-from django.utils import timezone
 from django.db.models import Q
 
 
@@ -30,7 +29,6 @@ def folder_actions(request, pk):
         return Response(serializer.data)
 
     elif request.method == "PUT":
-        request.data["updatedAt"] = timezone.now()
         serializer = FolderSerializer(folder, data=request.data)
         if serializer.is_valid():
             serializer.save()
@@ -67,7 +65,6 @@ def file_actions(request, pk):
         return Response(serializer.data)
 
     elif request.method == "PUT":
-        request.data["updatedAt"] = timezone.now()
         serializer = FileSerializer(file, data=request.data)
         if serializer.is_valid():
             serializer.save()
