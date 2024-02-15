@@ -24,11 +24,17 @@ class FolderSerializer(serializers.ModelSerializer):
 
     def validate(self, data):
 
-        if Folder.objects.filter(parentFolderId=None, name=data["name"]):
+        if self.instance is not None and Folder.objects.filter(
+            parentFolderId=None, name=data["name"]
+        ).exclude(id=self.instance.id):
             raise ValueError("Folder with this name already exists in the directory")
 
-        elif "parentFolderId" in data and Folder.objects.filter(
-            parentFolderId=data["parentFolderId"], name=data["name"]
+        elif (
+            self.instance is not None
+            and "parentFolderId" in data
+            and Folder.objects.filter(
+                parentFolderId=data["parentFolderId"], name=data["name"]
+            ).exclude(id=self.instance.id)
         ):
             raise ValueError("Folder with this name already exists in the directory")
         return data
@@ -56,11 +62,17 @@ class FileSerializer(serializers.ModelSerializer):
 
     def validate(self, data):
 
-        if File.objects.filter(parentFolderId=None, name=data["name"]):
+        if self.instance is not None and File.objects.filter(
+            parentFolderId=None, name=data["name"]
+        ).exclude(id=self.instance.id):
             raise ValueError("File with this name already exists in the directory")
 
-        elif "parentFolderId" in data and File.objects.filter(
-            parentFolderId=data["parentFolderId"], name=data["name"]
+        elif (
+            self.instance is not None
+            and "parentFolderId" in data
+            and File.objects.filter(
+                parentFolderId=data["parentFolderId"], name=data["name"]
+            ).exclude(id=self.instance.id)
         ):
             raise ValueError("File with this name already exists in the directory")
 
