@@ -34,6 +34,7 @@ def folder_actions(request, pk):
         serializer = FolderSerializer(folder, data=request.data)
         if serializer.is_valid():
             serializer.save()
+
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
@@ -136,5 +137,5 @@ def searchForObjects(request, query=""):
                 folders.filter(name__icontains=query)[:5], many=True
             ).data
 
-            return Response([files + folders])
+            return Response(files + folders)
         return Response([])

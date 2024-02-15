@@ -15,7 +15,7 @@ class Folder(models.Model):
         related_name="childFolders",
     )
     createdAt = models.DateTimeField(auto_now_add=True)
-    updatedAt = models.DateTimeField(auto_now_add=True)
+    updatedAt = models.DateTimeField(auto_now=True)
 
     @property
     def byte_size(self):
