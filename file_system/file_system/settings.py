@@ -1,5 +1,8 @@
 from pathlib import Path
 import os
+from dotenv import load_dotenv, find_dotenv
+
+load_dotenv(find_dotenv())
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -71,28 +74,28 @@ WSGI_APPLICATION = "file_system.wsgi.application"
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
 
-# DATABASES = {
-#     "default": {
-#         "ENGINE": "django.db.backends.postgresql",
-#         "NAME": os.environ.get("POSTGRES_DB"),
-#         "USER": os.environ.get("POSTGRES_USER"),
-#         "PASSWORD": os.environ.get("POSTGRES_PASSWORD"),
-#         "HOST": os.environ.get("POSTGRES_HOST"),
-#         "PORT": "5432",
-#     }
-# }
-
-
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
-        "NAME": "postgres",
-        "USER": "postgres",
-        "PASSWORD": "mypass",
-        "HOST": "localhost",
+        "NAME": os.environ.get("POSTGRES_DB"),
+        "USER": os.environ.get("POSTGRES_USER"),
+        "PASSWORD": os.environ.get("POSTGRES_PASSWORD"),
+        "HOST": os.environ.get("POSTGRES_HOST"),
         "PORT": "5432",
     }
 }
+
+
+# DATABASES = {
+#     "default": {
+#         "ENGINE": "django.db.backends.postgresql",
+#         "NAME": "file_system",
+#         "USER": "postgres",
+#         "PASSWORD": ",*2q:&ez%HIMK9jG",
+#         "HOST": "35.195.102.46",
+#         # "PORT": "5432",
+#     }
+# }
 
 
 # Password validation
