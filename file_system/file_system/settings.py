@@ -45,8 +45,36 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
-CORS_ALLOWED_ORIGINS = [
+CORS_ALLOW_CREDENTIALS = True
+CORS_ALLOW_ALL_ORIGINS = True
+
+ALLOWED_HOSTS = ["localhost", "filesystem-fe-dvr6tuhndq-lm.a.run.app"]
+
+CORS_ALLOWED_ORIGIN_REGEXES = [
     "http://localhost:3000",
+    "https://filesystem-fe-dvr6tuhndq-lm.a.run.app/",
+]
+
+CORS_ALLOWED_ORIGINS = (
+    "http://localhost:3000",
+    "https://filesystem-fe-dvr6tuhndq-lm.a.run.app/",
+)
+
+CORS_ORIGIN_WHITELIST = (
+    "http://localhost:3000",
+    "https://filesystem-fe-dvr6tuhndq-lm.a.run.app/",
+)
+
+CORS_ALLOW_HEADERS = [
+    "accept",
+    "accept-encoding",
+    "authorization",
+    "content-type",
+    "dnt",
+    "origin",
+    "user-agent",
+    "x-csrftoken",
+    "x-requested-with",
 ]
 
 ROOT_URLCONF = "file_system.urls"
